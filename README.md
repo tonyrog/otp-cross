@@ -1,6 +1,6 @@
-# How to cross compile a working Erlang system
+# How to cross compile Erlang OTP including crypto and ncurses
 
-First get access to a cross compiler. Here I will use the
+First get install a cross compiler. Here I will use the
 arm-linux-gnueabi.
 
 Then follow the instructions below
@@ -48,7 +48,7 @@ When building the tar file we remove some apps in order to reduce
 the size of the image. We could probably add --exclude=erlang/lib/*/src*
 as well.
 
-   tar czf erlang.tgz --exclude=erlang/lib/cos* --exclude=erlang/lib/common_test* --exclude=erlang/lib/percept* --exclude=erlang/lib/public_key* --exclude=erlang/lib/eunit* --exclude=erlang/lib/gs* --exclude=erlang/lib/ic* --exclude=erlang/lib/jinterface* --exclude=erlang/lib/megaco* --exclude=erlang/lib/test_server* --exclude=erlang/lib/dialyzer* --exclude=erlang/lib/observer* --exclude=erlang/lib/diameter* --exclude=erlang/lib/orber* --exclude=erlang/lib/typer* --exclude=erlang/lib/edoc* --exclude=erlang/lib/ose* --exclude=erlang/lib/webtool* --exclude=erlang/lib/eldap* --exclude=erlang/lib/wx* --exclude=erlang/lib/erl_docgen* --exclude=erlang/lib/otp_mibs* ./erlang
+    tar czf erlang.tgz --exclude=erlang/lib/cos* --exclude=erlang/lib/common_test* --exclude=erlang/lib/percept* --exclude=erlang/lib/public_key* --exclude=erlang/lib/eunit* --exclude=erlang/lib/gs* --exclude=erlang/lib/ic* --exclude=erlang/lib/jinterface* --exclude=erlang/lib/megaco* --exclude=erlang/lib/test_server* --exclude=erlang/lib/dialyzer* --exclude=erlang/lib/observer* --exclude=erlang/lib/diameter* --exclude=erlang/lib/orber* --exclude=erlang/lib/typer* --exclude=erlang/lib/edoc* --exclude=erlang/lib/ose* --exclude=erlang/lib/webtool* --exclude=erlang/lib/eldap* --exclude=erlang/lib/wx* --exclude=erlang/lib/erl_docgen* --exclude=erlang/lib/otp_mibs* ./erlang
 
 Here is how to install the erlang.tgz on the target system
 
@@ -60,6 +60,7 @@ the ssh/minicom to the target and
     tar xf ~user/erlang.tgz
     cd erlang
     ./Install -minimal /usr/lib/erlang
+    ln -s /usr/lib/erlang/bin/erl /usr/bin/erl
 
 To get termcap working ( the ncurses step ) some data located under
 $HOME/arm/share/terminfo needs to be (re)located at the target under
@@ -69,8 +70,8 @@ Ncurses may ha option for this in build time ?
 
 # How to build applications
 
-Use rebar and set the REBAR_TARGET_ARCH, that will compile
-most application that contain driver/nif source code.
+Use rebar and set the REBAR_TARGET_ARCH. This will cross compile
+most rebar application that contain driver/nif source code.
 
 ## dthread
 
@@ -85,4 +86,3 @@ most application that contain driver/nif source code.
     REBAR_TARGET_ARCH=arm-linux-gnueabi rebar compile
 
 And so on.
-
