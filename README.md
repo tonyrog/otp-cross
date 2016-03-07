@@ -13,6 +13,7 @@ Then follow the instructions below
     > ./configure --prefix=$HOME/arm
     > make
     > make install
+    > unset CC  # thanks benoitc
 
 ## openssl
     > wget http://openssl.org/source/openssl-1.0.2f.tar.gz
@@ -41,7 +42,7 @@ Now modify xcomp/erl-xcomp-arm-linux.conf, replace arm-wrs-linux-gnueabi with ar
     > ./otp_build configure 
     > export ARM_SYSROOT=$HOME/arm
     > ./otp_build configure --with-ssl=$HOME/arm --disable-dynamic-ssl-lib --xcomp-conf=./xcomp/erl-xcomp-arm-linux.conf
-    > ./otp_build boot
+    > ./otp_build boot -a
     > ./otp_build release -a $HOME/arm/erlang
 
 When building the tar file we remove some apps in order to reduce
