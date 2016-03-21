@@ -55,7 +55,7 @@ Here is how to install the erlang.tgz on the target system
 
     scp erlang.tgz user@ip:
 
-the ssh/minicom to the target and
+then ssh/minicom to the target and
 
     cd /usr/lib
     tar xf ~user/erlang.tgz
@@ -64,26 +64,15 @@ the ssh/minicom to the target and
     ln -s /usr/lib/erlang/bin/erl /usr/bin/erl
 
 To get termcap working ( the ncurses step ) some data located under
-$HOME/arm/share/terminfo needs to be (re)located at the target under
+$HOME/arm/share/terminfo needs to be (re)located on the target under
 for example $HOME/.terminfo. Or you may set a symbolic link from
 $HOME/.terminfo  -> /usr/share/terminfo 
-Ncurses may ha option for this in build time ?
+Ncurses may have options to fix this at build time ?
 
 # How to build applications
 
 Use rebar and set the REBAR_TARGET_ARCH. This will cross compile
-most rebar application that contain driver/nif source code.
+most rebar applications that contain driver/nif source code.
 
-## dthread
-
+    cd my_app
     REBAR_TARGET_ARCH=arm-linux-gnueabi rebar compile
-
-## uart
-
-    REBAR_TARGET_ARCH=arm-linux-gnueabi rebar compile
-
-## can
-
-    REBAR_TARGET_ARCH=arm-linux-gnueabi rebar compile
-
-And so on.
